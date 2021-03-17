@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
 
 // to validate the user input and report any errors before creating the user
 const { body, validationResult } = require('express-validator');
@@ -52,8 +53,36 @@ router.post(
       }
 
       // get users gravatar
+      const avatar = gravatar.url(email, {
+        s: '200', // default size
+        r: 'pg', // rating - no naked pic
+        d: 'mm', // default image user icon
+      });
+
+      // if user doesn't exists, create new user using User modal
+      user = new User({
+        name,
+        email,
+        avatar,
+        password,
+      });
+
       // Encrypt password
+      // before we save it in db, we need to encrypt/hash the password
+      // using bcrypt genSalt method to generate a salt to hash the password
+      // which returns a promise
+      // 10 is default round to determine how secure the salt is
+      const salt = await bcrypt.genSalt(10);
+
+      // taking above salt & hashing the password
+      // takes in plain user password & above salt
+      user.password = await bcrypt.hash(password, salt);
+
+      // to save in db
+      await user.save();
+
       // return jsonwebtoken
+      res.send('User registered');
     } catch (err) {
       console.log(err.message);
       res.status(500).send('Server error');

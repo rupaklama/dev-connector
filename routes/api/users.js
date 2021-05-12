@@ -1,5 +1,8 @@
 const express = require('express');
+
+// express.Router class to create modular, mountable route handlers
 const router = express.Router();
+
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 
@@ -21,10 +24,7 @@ router.post(
   [
     body('name', 'Name is required').not().isEmpty(),
     body('email', 'Please include a valid email').isEmail(),
-    body(
-      'password',
-      'Please enter a password with 6 or more characters'
-    ).isLength({
+    body('password', 'Please enter a password with 6 or more characters').isLength({
       min: 6,
     }),
   ],
@@ -47,9 +47,7 @@ router.post(
       // see if user exists with an email
       let user = await User.findOne({ email });
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+        return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
       }
 
       // get users gravatar

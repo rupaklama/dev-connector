@@ -13,7 +13,7 @@ connectDB();
 // to the req.body property before sending to the request handlers
 app.use(express.json({ extended: false }));
 
-app.get('/', (req, res) => res.send('API Running'));
+app.get('/', (req, res) => res.json('API Running'));
 
 // Define Routes
 // use method - to make use of routes or middleware

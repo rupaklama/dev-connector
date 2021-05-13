@@ -5,6 +5,8 @@ const router = express.Router();
 
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 // to validate the user input and report any errors before creating the user
 const { body, validationResult } = require('express-validator');
@@ -12,7 +14,7 @@ const { body, validationResult } = require('express-validator');
 // importing our User model
 const User = require('../../models/User');
 
-// @route   GET api/users
+// @route   POST api/users
 // @des     Register user
 // @access  Public
 
@@ -35,6 +37,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
+    // destructuring from request body
     const { name, email, password } = req.body;
 
     try {
@@ -44,7 +47,7 @@ router.post(
       // This is known as the findOne method. It returns the first matching document
       // whether or not if additional queries are given, it will return the very first document on the collection.
 
-      // see if user exists with an email
+      // see if user already exists with an email
       let user = await User.findOne({ email });
       if (user) {
         return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
@@ -79,8 +82,19 @@ router.post(
       // to save in db
       await user.save();
 
-      // return jsonwebtoken
-      res.send('User registered');
+      // payload for token
+      const payload = {
+        user: {
+          // mangoose matches the id in mangodb
+          id: user.id,
+        },
+      };
+
+      // to send user token
+      jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '5 days' }, (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      });
     } catch (err) {
       console.log(err.message);
       res.status(500).send('Server error');

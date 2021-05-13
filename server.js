@@ -8,7 +8,7 @@ const app = express();
 // Connect Database
 connectDB();
 
-// setup body parser middleware
+// NOTE - 'bodyParser' is part of node now to modify  either the 'request' or 'response'
 // Anytime incoming requests occurs,this middleware parse the body & assigns the 'json data'
 // to the req.body property before sending to the request handlers
 app.use(express.json({ extended: false }));

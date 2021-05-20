@@ -1,6 +1,9 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { Fragment, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlertAction } from '../../actions/alertAction';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,8 @@ const Register = () => {
     password: '',
     password2: '',
   });
+
+  const dispatch = useDispatch();
 
   // destructuring properties
   const { name, email, password, password2 } = formData;
@@ -20,31 +25,37 @@ const Register = () => {
     e.preventDefault();
 
     if (password !== password2) {
-      console.log('Password do not match');
+      dispatch(setAlertAction('Password do not match', 'danger'));
     } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        // JSON. parse() takes a JSON string and transforms it into a JavaScript object.
-        // stringify() takes a JavaScript object and transforms it into a JSON string
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('/api/users', body, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
+      console.log('SUCCESS');
     }
+
+    // if (password !== password2) {
+    //   console.log('Password do not match');
+    // } else {
+    //   const newUser = {
+    //     name,
+    //     email,
+    //     password,
+    //   };
+
+    //   try {
+    //     const config = {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     };
+
+    //     // JSON. parse() takes a JSON string and transforms it into a JavaScript object.
+    //     // stringify() takes a JavaScript object and transforms it into a JSON string
+    //     const body = JSON.stringify(newUser);
+
+    //     const res = await axios.post('/api/users', body, config);
+    //     console.log(res.data);
+    //   } catch (err) {
+    //     console.error(err.response.data);
+    //   }
+    // }
 
     setFormData({ name: '', email: '', password: '', password2: '' });
   };
@@ -120,5 +131,10 @@ const Register = () => {
     </Fragment>
   );
 };
+
+// since using useDispatch hook
+// Register.propTypes = {
+//   setAlertAction: PropTypes.func.isRequired,
+// };
 
 export default Register;

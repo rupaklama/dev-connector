@@ -4,6 +4,7 @@ import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setAlertAction } from '../../actions/alertAction';
+import { registerAction } from '../../actions/authAction';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Register = () => {
     if (password !== password2) {
       dispatch(setAlertAction('Password do not match', 'danger'));
     } else {
-      console.log('SUCCESS');
+      dispatch(registerAction({ name, email, password }));
     }
 
     // if (password !== password2) {
@@ -78,7 +79,7 @@ const Register = () => {
             name='name'
             value={name}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div className='form-group'>
@@ -90,7 +91,7 @@ const Register = () => {
             name='email'
             value={email}
             onChange={onChange}
-            required
+            // required
           />
           <small className='form-text'>
             This site uses Gravatar so if you want a profile image, use a Gravatar email
@@ -103,10 +104,10 @@ const Register = () => {
             id='password'
             placeholder='Password'
             name='password'
-            minLength='6'
+            // minLength='6'
             value={password}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div className='form-group'>
@@ -116,10 +117,10 @@ const Register = () => {
             id='password2'
             placeholder='Confirm Password'
             name='password2'
-            minLength='6'
+            // minLength='6'
             value={password2}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />

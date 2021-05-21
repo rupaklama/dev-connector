@@ -2,6 +2,9 @@
 const express = require('express');
 const connectDB = require('./config/db');
 
+// cors request
+const cors = require('cors');
+
 // instance of express app object
 const app = express();
 
@@ -12,6 +15,9 @@ connectDB();
 // Anytime incoming requests occurs,this middleware parse the body & assigns the 'json data'
 // to the req.body property before sending to the request handlers
 app.use(express.json({ extended: false }));
+
+// use cors middleware
+app.use(cors());
 
 app.get('/', (req, res) => res.json('API Running'));
 

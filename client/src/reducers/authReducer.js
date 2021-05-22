@@ -1,4 +1,12 @@
-import { AUTH_ERROR, GET_USER, REGISTER_FAIL, REGISTER_SUCCESS } from '../actions/authAction';
+import {
+  AUTH_ERROR,
+  GET_USER,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+} from '../actions/authAction';
 
 const initialState = {
   // fetching token if its available in local storage
@@ -14,6 +22,7 @@ export const authReducer = (state = initialState, action) => {
 
   switch (type) {
     case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
       // set token inside local storage
       localStorage.setItem('token', payload.token);
       return {
@@ -24,6 +33,8 @@ export const authReducer = (state = initialState, action) => {
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
+    case LOGIN_FAIL:
+    case LOGOUT:
       // removing from local storage
       localStorage.removeItem('token');
       return {

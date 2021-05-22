@@ -1,8 +1,8 @@
 // import axios from 'axios';
 import React, { Fragment, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 import { setAlertAction } from '../../actions/alertAction';
 import { registerAction } from '../../actions/authAction';
 
@@ -15,6 +15,9 @@ const Register = () => {
   });
 
   const dispatch = useDispatch();
+
+  const authState = useSelector(state => state.auth);
+  const { isAuthenticated } = authState;
 
   // destructuring properties
   const { name, email, password, password2 } = formData;
@@ -60,6 +63,11 @@ const Register = () => {
 
     setFormData({ name: '', email: '', password: '', password2: '' });
   };
+
+  // redirect user after registration
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Fragment>

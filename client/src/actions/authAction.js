@@ -4,6 +4,10 @@ import { setAlertAction } from './alertAction';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+
 export const GET_USER = 'GET_USER'; // auth user
 export const AUTH_ERROR = 'AUTH_ERROR'; // token failed
 
@@ -50,3 +54,33 @@ export const registerAction =
       });
     }
   };
+
+// login user
+export const loginAction = (email, password) => async dispatch => {
+  try {
+    const res = await api.post('/api/auth', { email, password });
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    // since we are getting array of errors from our backend
+    // array is call 'errors'
+    const errors = err.response.data.errors;
+
+    // display errors with setAlertAction creator
+    if (errors) {
+      errors.forEach(error => dispatch(setAlertAction(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+// logout
+export const logoutAction = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};

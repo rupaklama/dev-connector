@@ -1,11 +1,18 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { loginAction } from '../../actions/authAction';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const dispatch = useDispatch();
+
+  const authState = useSelector(state => state.auth);
+  const { isAuthenticated } = authState;
 
   // destructuring properties
   const { email, password } = formData;
@@ -15,10 +22,16 @@ const Login = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    console.log('success, you are logged in!');
+
+    dispatch(loginAction(email, password));
 
     setFormData({ email: '', password: '' });
   };
+
+  // redirect user after logged in
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Fragment>
@@ -38,7 +51,7 @@ const Login = () => {
             name='email'
             value={email}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div className='form-group'>
@@ -48,10 +61,10 @@ const Login = () => {
             id='password'
             placeholder='Password'
             name='password'
-            minLength='6'
+            // minLength='6'
             value={password}
             onChange={onChange}
-            required
+            // required
           />
         </div>
 

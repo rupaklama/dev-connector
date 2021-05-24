@@ -11,8 +11,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const authState = useSelector(state => state.auth);
-  const { isAuthenticated } = authState;
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   // destructuring properties
   const { email, password } = formData;

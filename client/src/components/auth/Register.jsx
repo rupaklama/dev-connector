@@ -16,8 +16,7 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const authState = useSelector(state => state.auth);
-  const { isAuthenticated } = authState;
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   // destructuring properties
   const { name, email, password, password2 } = formData;

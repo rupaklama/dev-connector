@@ -8,6 +8,9 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
+// after user logs out
+export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+
 export const GET_USER = 'GET_USER'; // auth user
 export const AUTH_ERROR = 'AUTH_ERROR'; // token failed
 
@@ -82,5 +85,6 @@ export const loginAction = (email, password) => async dispatch => {
 
 // logout
 export const logoutAction = () => dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

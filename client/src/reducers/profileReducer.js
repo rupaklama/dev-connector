@@ -1,3 +1,4 @@
+import { CLEAR_PROFILE } from '../actions/authAction';
 import { GET_PROFILE, PROFILE_ERROR } from '../actions/profileAction';
 
 const initialState = {
@@ -24,6 +25,13 @@ const profileReducer = (state = initialState, action) => {
         error: payload,
         loading: false,
         profile: null,
+      };
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
+        loading: false,
       };
     default:
       return state;

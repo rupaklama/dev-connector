@@ -14,6 +14,7 @@ import Navbar from './components/layout/Navbar';
 import { getAuthUserAction } from './actions/authAction';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
+import ProfileForm from './components/create-profile/ProfileForm';
 
 const App = () => {
   useEffect(() => {
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path='/register' component={Register} />
           <Route exact path='/login' component={Login} />
           <PrivateRoute exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute exact path='/create-profile' component={ProfileForm} />
         </Switch>
       </section>
     </Fragment>

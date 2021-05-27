@@ -3,6 +3,7 @@ import { setAlertAction } from './alertAction';
 
 export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 // get current user's profile
 export const getCurrentProfile = () => async dispatch => {
@@ -57,3 +58,59 @@ export const createProfileAction =
       });
     }
   };
+
+// add experience
+export const addExperienceAction = (formData, history) => async dispatch => {
+  try {
+    const res = await api.put('/api/profile/experience', formData);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    // set an alert
+    dispatch(setAlertAction('Experience Added', 'success'));
+
+    history.push('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlertAction(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// add education
+export const addEducationAction = (formData, history) => async dispatch => {
+  try {
+    const res = await api.put('/api/profile/education', formData);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    // set an alert
+    dispatch(setAlertAction('Education Added', 'success'));
+
+    history.push('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlertAction(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

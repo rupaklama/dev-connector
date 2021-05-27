@@ -1,5 +1,5 @@
 import { CLEAR_PROFILE } from '../actions/authAction';
-import { GET_PROFILE, PROFILE_ERROR } from '../actions/profileAction';
+import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from '../actions/profileAction';
 
 const initialState = {
   profile: null,
@@ -14,6 +14,9 @@ const profileReducer = (state = initialState, action) => {
 
   switch (type) {
     case GET_PROFILE:
+    case UPDATE_PROFILE:
+      // adding more data into our profile with UPDATE_PROFILE
+      // GET_PROFILE will always get us new updated profile
       return {
         ...state,
         profile: payload,

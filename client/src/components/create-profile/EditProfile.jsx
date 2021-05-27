@@ -1,8 +1,8 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfileAction } from '../../actions/profileAction';
+import { createProfileAction, getCurrentProfile } from '../../actions/profileAction';
 
 const initialState = {
   company: '',
@@ -19,14 +19,38 @@ const initialState = {
   instagram: '',
 };
 
-const ProfileForm = ({ history }) => {
-  const [formData, setFormData] = useState(initialState);
+const EditProfile = ({ history }) => {
+  const [formData, SetFormData] = useState(initialState);
 
-  const { profile } = useSelector(state => state.profile);
+  const { profile, loading } = useSelector(state => state.profile);
 
   const dispatch = useDispatch();
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  // setting form data
+  useEffect(() => {
+    getCurrentProfile();
+
+    SetFormData({
+      // if loading or no input data exists, have a blank field
+      // if it's not loading & input field data exists, fill the form input with that data
+      company: loading || !profile.company ? '' : profile.company,
+      website: loading || !profile.website ? '' : profile.website,
+      location: loading || !profile.location ? '' : profile.location,
+      status: loading || !profile.status ? '' : profile.status,
+      skills: loading || !profile.skills ? '' : profile.skills.join(','),
+      githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social ? '' : profile.social.youtube,
+      instagram: loading || !profile.social ? '' : profile.social.instagram,
+    });
+    // every time when this page loads, we want this to run
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   const handleToggle = () => {
     // toggleSocialInputs(prevState => !prevState);
@@ -49,7 +73,7 @@ const ProfileForm = ({ history }) => {
     instagram,
   } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = e => SetFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
@@ -57,7 +81,7 @@ const ProfileForm = ({ history }) => {
     // create/update action
     dispatch(createProfileAction(formData, history, profile ? true : false));
 
-    setFormData({
+    SetFormData({
       company: '',
       website: '',
       location: '',
@@ -212,4 +236,4 @@ const ProfileForm = ({ history }) => {
   );
 };
 
-export default ProfileForm;
+export default EditProfile;

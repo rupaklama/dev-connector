@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
+import DashboardActions from './DashboardActions';
 
 const Dashboard = () => {
   const { loading, profile } = useSelector(state => state.profile);
@@ -27,7 +28,9 @@ const Dashboard = () => {
 
       {/* if user has profile - not null */}
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <DashboardActions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>You have not yet setup a profile, please add some info</p>

@@ -11,7 +11,7 @@ import Alert from './components/layout/Alert';
 
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
-import { getAuthUserAction } from './actions/authAction';
+import { getAuthUserAction, LOGOUT } from './actions/authAction';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ProfileForm from './components/create-profile/ProfileForm';
@@ -20,16 +20,23 @@ import AddExperience from './components/create-profile/AddExperience';
 import AddEducation from './components/create-profile/AddEducation';
 
 const App = () => {
-  useEffect(() => {
-    // if we have a token in local storage, we always want to sent that
-    if (localStorage.token) {
-      // if token put it in Global Header 'x-auth-token'
-      // func to set persist authentication
-      setAuthToken(localStorage.token);
-    }
+  // if we have a token in local storage, we always want to sent that
+  if (localStorage.token) {
+    // if token put it in Global Header 'x-auth-token'
+    // func to set persist authentication
+    setAuthToken(localStorage.token);
+  }
 
-    // accessing Store directly to dispatch loadUserAction
+  useEffect(() => {
+    // When our React App Boots up, we are going to make sure that our App Component
+    // calls an Action Creator & this Action Creator is responsible for making
+    // an API Request to our Backend to find out if Current User is logged in or not
     store.dispatch(getAuthUserAction()); // get authenticated user
+
+    // log user out from all tabs if they log out in one tab
+    window.addEventListener('storage', () => {
+      if (!localStorage.token) store.dispatch({ type: LOGOUT });
+    });
   }, []);
 
   return (

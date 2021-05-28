@@ -11,16 +11,24 @@ import {
 const initialState = {
   // fetching token if its available in local storage
   token: localStorage.getItem('token'),
-
   isAuthenticated: null,
   loading: true,
   user: null,
 };
 
-export const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    // auth user
+    case GET_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+      };
+    // setting response token after register & login
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       // set token inside local storage
@@ -44,16 +52,10 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
         user: null,
       };
-    // auth user
-    case GET_USER:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: payload,
-      };
 
     default:
       return state;
   }
 };
+
+export default authReducer;

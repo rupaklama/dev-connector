@@ -1,4 +1,4 @@
-// javascript has a New Internationalization API to format Numbers & Strings
+// javascript has a New Internationalization API to format Dates, Numbers & Strings
 // according to users different languages & locations.
 // This help support different languages in our app for users around the world.
 

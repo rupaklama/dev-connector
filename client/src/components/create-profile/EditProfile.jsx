@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfileAction, getCurrentProfile } from '../../actions/profileAction';
+import { createProfileAction, getCurrentProfileAction } from '../../actions/profileAction';
 
 const initialState = {
   company: '',
@@ -30,7 +30,7 @@ const EditProfile = ({ history }) => {
 
   // setting form data
   useEffect(() => {
-    getCurrentProfile();
+    getCurrentProfileAction();
 
     SetFormData({
       // if loading or no input data exists, have a blank field

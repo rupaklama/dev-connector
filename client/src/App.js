@@ -20,14 +20,14 @@ import AddExperience from './components/create-profile/AddExperience';
 import AddEducation from './components/create-profile/AddEducation';
 
 const App = () => {
-  // if we have a token in local storage, we always want to sent that
-  if (localStorage.token) {
-    // if token put it in Global Header 'x-auth-token'
-    // func to set persist authentication
-    setAuthToken(localStorage.token);
-  }
-
   useEffect(() => {
+    // if we have a token in local storage, we always want to sent that
+    if (localStorage.token) {
+      // if token put it in Global Header 'x-auth-token'
+      // func to set persist authentication
+      setAuthToken(localStorage.token);
+    }
+
     // When our React App Boots up, we are going to make sure that our App Component
     // calls an Action Creator & this Action Creator is responsible for making
     // an API Request to our Backend to find out if Current User is logged in or not

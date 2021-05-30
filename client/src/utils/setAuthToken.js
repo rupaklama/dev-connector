@@ -9,14 +9,12 @@ import api from './api';
 const setAuthToken = token => {
   if (token) {
     // setting it to the token pass in above param
-    api.defaults.headers.common['x-auth-token'] = token;
-    localStorage.setItem('token', token);
-  } else {
-    // if not a token delete it to clear the local storage
     // When we have a token, we are going to send it with Every Request instead
     // of picking and choosing which Request to send it with
+    api.defaults.headers.common['x-auth-token'] = token;
+  } else {
+    // if not a token, delete it to clear the local storage
     delete api.defaults.headers.common['x-auth-token'];
-    localStorage.removeItem('token');
   }
 };
 

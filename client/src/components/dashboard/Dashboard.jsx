@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profileAction';
+import { deleteAccountAction, getCurrentProfileAction } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentProfile());
+    dispatch(getCurrentProfileAction());
   }, [dispatch]);
 
   // if loading and profile is null
@@ -34,6 +34,12 @@ const Dashboard = () => {
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
+
+          <div className='my-2'>
+            <button className='btn btn-danger' onClick={() => dispatch(deleteAccountAction())}>
+              <i className='fas fa-user' /> Delete My Account
+            </button>
+          </div>
         </Fragment>
       ) : (
         <Fragment>
@@ -41,6 +47,12 @@ const Dashboard = () => {
           <Link to='/create-profile' className='btn btn-primary my-1'>
             Create Profile
           </Link>
+
+          <div className='my-2'>
+            <button className='btn btn-danger' onClick={() => dispatch(deleteAccountAction())}>
+              <i className='fas fa-user' /> Delete My Account
+            </button>
+          </div>
         </Fragment>
       )}
     </Fragment>

@@ -1,7 +1,10 @@
 import api from '../utils/api';
 import setAuthToken from '../utils/setAuthToken';
 // import setAuthToken from '../utils/setAuthToken';
-import { setAlertAction } from './alertAction';
+import { setAlertAction } from './alertAction'; // token failed
+
+// after user logs out
+import { CLEAR_PROFILE } from './profileAction';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
@@ -9,11 +12,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
-// after user logs out
-export const CLEAR_PROFILE = 'CLEAR_PROFILE';
-
 export const GET_USER = 'GET_USER'; // auth user
-export const AUTH_ERROR = 'AUTH_ERROR'; // token failed
+export const AUTH_ERROR = 'AUTH_ERROR';
 
 // NOTE - we need to run this action creator when our initial app loads for token data persistence
 // When our React App Boots up, we are going to make sure that our App Component

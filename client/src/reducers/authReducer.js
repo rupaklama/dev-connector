@@ -7,6 +7,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
 } from '../actions/authAction';
+import { ACCOUNT_DELETED } from '../actions/profileAction';
 
 const initialState = {
   // fetching token if its available in local storage
@@ -43,6 +44,7 @@ const authReducer = (state = initialState, action) => {
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
+    case ACCOUNT_DELETED:
       // removing from local storage
       localStorage.removeItem('token');
       return {

@@ -2,7 +2,7 @@ import api from './api';
 
 // need to check to see if there's a token &
 // if we have a token in local storage, we always want to sent that.
-// if token put it in Global Header 'x-auth-token'
+// if we have token, put it in the Global Header 'x-auth-token'
 
 // function takes in a 'token' if token is there in a local storage
 // it will add to the header, if not it will delete from the header

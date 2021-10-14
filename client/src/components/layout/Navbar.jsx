@@ -7,7 +7,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const authState = useSelector(state => state.auth);
-  const { isAuthenticated } = authState;
+  const { isAuthenticated, loading } = authState;
 
   const onClick = () => dispatch(logoutAction());
 
@@ -51,7 +51,8 @@ const Navbar = () => {
         </Link>
       </h1>
 
-      <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+      {/* done loading 'loading: false' */}
+      {!loading && <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}
     </nav>
   );
 };

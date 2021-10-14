@@ -15,6 +15,8 @@ export const LOGOUT = 'LOGOUT';
 export const GET_USER = 'GET_USER'; // auth user
 export const AUTH_ERROR = 'AUTH_ERROR';
 
+// NOTE - We need to run this Action on our initial render in App.js to persist authentication
+// NOTE - JWT is a Stateless form of Authentication so we have to keep sending request to load user
 // NOTE - we need to run this action creator when our initial app loads for token data persistence
 // When our React App Boots up, we are going to make sure that our App Component
 // calls an Action Creator & this Action Creator is responsible for making
@@ -22,8 +24,8 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const getAuthUserAction = () => async dispatch => {
   // if we have a token in local storage, we always want to sent that
   if (localStorage.token) {
-    // if token put it in Global Header 'x-auth-token'
-    // func to set persist authentication
+    // setting authorization header
+    // if token, put it in the Global Header 'x-auth-token'
     setAuthToken(localStorage.token);
   }
 
